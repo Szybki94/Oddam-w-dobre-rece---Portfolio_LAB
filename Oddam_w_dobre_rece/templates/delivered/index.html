@@ -14,6 +14,7 @@
   </head>
   <body>
     <header class="header--main-page">
+      {% block headery %}
       <nav class="container container--70">
         <ul class="nav--actions">
           <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
@@ -29,6 +30,7 @@
           <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
       </nav>
+      {% endblock %}
 
       <div class="slogan container container--90">
         <div class="slogan--item">
@@ -40,6 +42,7 @@
       </div>
     </header>
 
+    {% block stats %}
     <section id="stats" class="stats">
       <div class="container container--85">
         <div class="stats--item">
@@ -56,7 +59,9 @@
 
       </div>
     </section>
+    {% endblock %}
 
+    {% block steps %}
     <section id="steps" class="steps">
       <h2>Wystarczą 4 proste kroki</h2>
 
@@ -85,7 +90,9 @@
 
       <a href="#" class="btn btn--large">Załóż konto</a>
     </section>
+    {% endblock %}
 
+    {% block about_us %}
     <section id="about-us" class="about-us">
       <div class="about-us--text">
         <h2>O nas</h2>
@@ -232,11 +239,14 @@
         -->
       </div>
     </section>
+    {% endblock %}
 
+    {% block footer %}
     <footer>
       <div id="contact" class="contact">
         <h2>Skontaktuj się z nami</h2>
         <h3>Formularz kontaktowy</h3>
+        {% block footer_form %}
         <form class="form--contact">
           <div class="form-group form-group--50"><input type="text" name="name" placeholder="Imię" /></div>
           <div class="form-group form-group--50"><input type="text" name="surname" placeholder="Nazwisko" /></div>
@@ -245,6 +255,7 @@
 
           <button class="btn" type="submit">Wyślij</button>
         </form>
+        {% endblock %}
       </div>
       <div class="bottom-line">
         <span class="bottom-line--copy">Copyright &copy; 2019</span>
@@ -254,6 +265,7 @@
         </div>
       </div>
     </footer>
+    {% endblock %}
 
     <script src="{% static 'js/app.js' %}"></script>
   </body>

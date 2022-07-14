@@ -4,12 +4,15 @@ from django.conf.urls.static import static
 from django.urls import path
 
 # VIEWS IMPORT
-from .views import TestView
+from .views import DonateView, HomeView, LoginView, RegisterView
 
 app_name = "home"
 
 urlpatterns = [
-    path("test-home/", TestView.as_view(), name="test")
+    path("", HomeView.as_view(), name="home"),
+    path("login/", LoginView.as_view(), name="login"),
+    path("register/", RegisterView.as_view(), name="register"),
+    path("donate/", DonateView.as_view(), name="donate"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
