@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import View
 from django.shortcuts import render, redirect, HttpResponse
+from django.views.generic import View
 
 
-from.forms import LoginForm
+from.forms import LoginForm, RegistrationForm
 
 # Create your views here.
 
@@ -19,35 +19,23 @@ class LoginView(View):
     context = {"form": LoginForm}
 
     def get(self, request):
-        if request.user.is_authenticated:
-            return HttpResponse("Już jesteś zalogowany")
         return render(request, "login.html", self.context)
 
 
 class RegisterView(View):
+
     def get(self, request):
-        return render(request, 'register.html', {})
+        form = RegistrationForm
+        return render(request, 'register.html', {"form": form})
 
     def post(self, request):
-        context = {}
-        name = request.POST["name"]
-        surname = request.POST["surname"]
-        email = request.POST["email"]
-        password1 = request.POST["password"]
-        password2 = request.POST["password2"]
-        email_check = User.objects.filter(email=email).first()
-        if email_check:
-            context['register_message'] = "Użytkownik o podanym adresie e-mail już istnieje"
-            return render(request, "register.html", context)
-        if "@" not in email:
-            context['register_message'] = "Podano zły adres email"
-            return render(request, "register.html", context)
-        if password1 != password2:
-            context['register_message'] = "Hasła nie są zgodne"
-            return render(request, "register.html", context)
-        new_user = User.objects.create_user(first_name=name, last_name=surname, email=email, password=password1)
-        new_user.save()
-        return redirect("home:login")
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Stworzono konto dla użytkownika - {form.cleaned_data['email']}")
+            return redirect("home:login")
+        else:
+            return render(request, "register.html", {"form": form})
 
 
 
