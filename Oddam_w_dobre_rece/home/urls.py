@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 # VIEWS IMPORT
-from .views import DonateView, HomeView, LoginView, RegisterView
+from .views import DonateView, HomeView, LoginView, RegisterView, ConfirmationTemporary
 
 app_name = "home"
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("register/", RegisterView.as_view(), name="register"),
     path("donate/", DonateView.as_view(), name="donate"),
+    path("donate-confirmation/", ConfirmationTemporary.as_view(), name="donate_confirmation"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

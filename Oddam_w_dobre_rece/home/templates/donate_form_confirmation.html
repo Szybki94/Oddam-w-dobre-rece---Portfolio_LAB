@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "00_base.html" %}
 
-</body>
-</html>
+
+{% block title %}
+    Oddam w dobre rece - donate confirmation
+{% endblock %}
+
+
+{% block body %}
+    {% include "repeatable/header_login.html" %}
+      <div class="slogan container container--90">
+          <h2>
+            Dziękujemy za przesłanie formularza Na maila prześlemy wszelkie
+            informacje o odbiorze.
+          </h2>
+      </div>
+    {% include "repeatable/footer.html" %}
+    {% include "repeatable/scripts.html" %}
+{% endblock %}
