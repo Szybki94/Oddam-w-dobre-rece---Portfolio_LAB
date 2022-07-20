@@ -1,7 +1,7 @@
 from home.models import User
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class RegistrationForm(UserCreationForm):
@@ -25,7 +25,7 @@ class RegistrationForm(UserCreationForm):
             }),
         }
 
-    # Ponieważ pola password1 i password2 nie są polami formularza zrobiłem takie fiku miku (Stack Overflow)
+    # Ponieważ pola password1 i password2 nie są polami formularza, zrobiłem takie Fiku-miku (Stack Overflow)
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['password1'].widget = forms.PasswordInput(
