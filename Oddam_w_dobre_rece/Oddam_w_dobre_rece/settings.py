@@ -69,6 +69,7 @@ TEMPLATES = [
 
                 # My CP bellow:
                 'context_processors.context_processor_main.donation_counter',
+                'context_processors.context_processor_main.foundations_info',
             ],
         },
     },
