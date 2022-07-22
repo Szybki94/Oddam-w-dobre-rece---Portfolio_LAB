@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import View
 
-from .models import User
+from .models import User, Category
 
 from.forms import LoginForm, RegistrationForm
 
@@ -56,8 +57,9 @@ class RegisterView(View):
             return render(request, "register.html", {"form": form})
 
 
+class DonateView(LoginRequiredMixin, View):
+    login_url = "home:login"
 
-class DonateView(View):
     def get(self, request):
         return render(request, 'donate_form.html', {})
 
@@ -65,4 +67,15 @@ class DonateView(View):
 # Temporary View it will be part POST metod of class aboce
 class ConfirmationTemporary(View):
     def get(self, request):
+        context = {
+            "categories": Category.objects.all(),
+        }
         return render(request, 'donate_form_confirmation.html', {})
+
+
+class LogoutView(View):
+    # Allow user to logout
+    def get(self, request):
+        messages.success(request, "Wylogowano")
+        logout(request)
+        return redirect("home:home")
