@@ -4,9 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import View
 
-from .models import User, Category
+from .models import User, Category, Institution
 
-from.forms import LoginForm, RegistrationForm
+from.forms import LoginForm, RegistrationForm, DonationForm
 
 # Create your views here.
 
@@ -14,7 +14,7 @@ from.forms import LoginForm, RegistrationForm
 # This view is only for testing view
 class HomeView(View):
     def get(self, request):
-        return render(request, 'home.html', {})
+        return render(request, "home.html", {})
 
 
 class LoginView(View):
@@ -24,8 +24,8 @@ class LoginView(View):
         return render(request, "login.html", {"form": form})
 
     def post(self, request):
-        email = request.POST['email']
-        password = request.POST['password']
+        email = request.POST["email"]
+        password = request.POST["password"]
 
         user_check = User.objects.filter(email=email).first()
         if user_check is None:
@@ -45,7 +45,7 @@ class LoginView(View):
 class RegisterView(View):
     def get(self, request):
         form = RegistrationForm
-        return render(request, 'register.html', {"form": form})
+        return render(request, "register.html", {"form": form})
 
     def post(self, request):
         form = RegistrationForm(request.POST)
@@ -61,16 +61,19 @@ class DonateView(LoginRequiredMixin, View):
     login_url = "home:login"
 
     def get(self, request):
-        return render(request, 'donate_form.html', {})
+        context = {
+            "form": DonationForm,
+            "institutions": Institution.objects.all()
+        }
+        return render(request, "donate_form.html", context)
 
 
 # Temporary View it will be part POST metod of class aboce
 class ConfirmationTemporary(View):
+    context = {}
+
     def get(self, request):
-        context = {
-            "categories": Category.objects.all(),
-        }
-        return render(request, 'donate_form_confirmation.html', {})
+        return render(request, "donate_form_confirmation.html", self.context)
 
 
 class LogoutView(View):
